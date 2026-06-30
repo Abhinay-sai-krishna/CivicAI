@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Represents a citizen in the community with gamified elements like reward points and badges.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "points": { "type": "integer", "description": "Reward points earned by verifying and reporting issues" },
+        "reportsCount": { "type": "integer", "description": "Count of issues reported" },
+        "votesCount": { "type": "integer", "description": "Count of verification votes submitted" },
+        "badges": { "type": "array", "description": "Badges earned (e.g., 'First Report', 'Civic Inspector', 'Alpha Voter')" }
+      },
+      "required": ["email", "displayName", "points"]
+    },
+    "Issue": {
+      "title": "Civic Issue",
+      "description": "Represents a civic problem reported by a citizen, analyzed by Gemini Vision.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string", "description": "Base64 string or image asset link for the issue visual proof" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "address": { "type": "string" },
+        "severity": { "type": "string" },
+        "urgency": { "type": "string" },
+        "urgencyReason": { "type": "string" },
+        "estimatedCost": { "type": "string" },
+        "complaintText": { "type": "string" },
+        "status": { "type": "string" },
+        "reportedAt": { "type": "string" },
+        "reportedBy": { "type": "string" },
+        "upvotes": { "type": "integer" },
+        "votedUsers": { "type": "array" },
+        "isEscalatedToRepresentatives": { "type": "boolean" },
+        "escalatedRepresentatives": { "type": "array" },
+        "socialSharesCount": { "type": "integer" }
+      },
+      "required": ["category", "lat", "lng", "status", "reportedAt", "reportedBy"]
+    },
+    "Comment": {
+      "title": "Issue Comment",
+      "description": "A comment left by a resident or official on an issue.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "isVerification": { "type": "boolean", "description": "Indicates if the comment serves as crowd verification" },
+        "verificationPhoto": { "type": "string", "description": "Optional Base64/image proof of the verified state" }
+      },
+      "required": ["userId", "userName", "text", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles and gamification points."
+    },
+    "issues/{issueId}": {
+      "schema": "Issue",
+      "description": "Stores public community issues with AI assessment details."
+    },
+    "issues/{issueId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Stores discussion comments for a specific community issue."
+    }
+  }
+}

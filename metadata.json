@@ -1,0 +1,6 @@
+{
+  "name": "CivicAI Agent",
+  "description": "Hyperlocal Community Problem Solver that utilizes Gemini Vision for issue assessment and routing, with geolocation tracking and crowd verification.",
+  "requestFramePermissions": ["camera", "geolocation", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
